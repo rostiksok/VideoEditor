@@ -1,20 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from "react";
+import { VESDK } from "react-native-videoeditorsdk";
+import HomeScreen from "./src/screens/HomeScreen";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const LICENCE_KEY = process.env.EXPO_PUBLIC_LICENCE_KEY;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => {
+  useEffect(() => {
+    try {
+      VESDK.unlockWithLicense(LICENCE_KEY);
+      console.warn("SUCCESSFULLY UNLOCKED VESDK");
+    } catch (error) {
+      console.error("Failed to unlock VESDK:", error);
+    }
+  }, []);
+
+  return <HomeScreen />;
+};
+
+export default App;
